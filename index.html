@@ -137,6 +137,10 @@ function blowCake(){
   audio.currentTime = 17; // 17. saniyeden başlat
   audio.play();
 
+setTimeout(() => {
+  audio.pause();  // çalmayı durdur
+  audio.currentTime = 0; // istersen başa sar
+}, 30000); // 30 saniye sonra durdur
   // havai fişek
   launchFireworks();
 }
