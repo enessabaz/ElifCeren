@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İyi ki Doğdun Elif Ceren 🎂</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  text-align:center;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:white;
+  overflow-x:hidden;
+}
+
+h1{
+  font-size: clamp(40px, 8vw, 60px);
+  margin-top: 2vw;
+}
+h2{
+  font-weight:300;
+  font-size: clamp(18px, 4vw, 30px);
+  margin-top:1vw;
+}
+
+section{
+  margin:4vw 2vw;
+}
+
+.cake{
+  font-size: clamp(100px, 20vw, 200px);
+  cursor:pointer;
+  transition:0.3s;
+  display:inline-block;
+}
+
+.cake:active{
+  transform:scale(1.15);
+}
+
+#cakeText{
+  display:none;
+  font-size:clamp(16px,4vw,24px);
+  margin-top:2vw;
+  line-height:1.3;
+}
+
+.gallery{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:2vw;
+}
+
+.gallery img{
+  width: clamp(120px, 40vw, 200px);
+  height: clamp(120px, 40vw, 200px);
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.3);
+  transition:0.3s;
+}
+
+.gallery img:active{
+  transform:scale(1.05);
+}
+
+.message{
+  max-width:90vw;
+  margin:auto;
+  font-size:clamp(16px,4vw,20px);
+  line-height:1.4;
+  background:rgba(255,255,255,0.15);
+  padding:3vw;
+  border-radius:5vw;
+}
+
+.fire{
+  position:fixed;
+  border-radius:50%;
+  z-index:10;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎉 İyi ki Doğdun Eliiiifffff🎉</h1>
+<h2>Senin için küçük bir sürpriz </h2>
+
+<section>
+<h2>🎂 Pastaya Tıkla</h2>
+<div class="cake" onclick="blowCake()">🎂</div>
+<div id="cakeText">
+🎉 Mumlara üfle!<br>
+İyi ki doğdun Elif Ceren 💖
+</div>
+</section>
+
+<section>
+<h2>📸 Fotoğraflar</h2>
+<div class="gallery">
+<img src="elif3.png">
+<img src="elif4.png">
+<img src="enes4.png">
+<img src="elif.png">
+</div>
+</section>
+
+<section>
+<h2>💌 Sana Bir Mesaj</h2>
+<div class="message">
+Elif Ceren,<br>
+İyi ki doğdun! İğne İpliğin sefiri<br>
+Hayatın boyunca mutluluk, başarı ve kahkaha seninle olsun.<br>
+Bugün senin günün 🎂<br>
+Bu yıl iyi eğlen.<br>
+İyi ki varsın 💖
+</div>
+</section>
+
+<!-- mp3 player -->
+<audio id="birthdayAudio" preload="auto">
+  <source src="elf.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById("birthdayAudio");
+
+/* pasta tıklama */
+function blowCake(){
+  document.getElementById("cakeText").style.display="block";
+
+  // müziği başlat
+  audio.currentTime = 17; // 17. saniyeden başlat
+  audio.play();
+
+  // havai fişek
+  launchFireworks();
+}
+
+/* roket ve patlama */
+function launchFireworks(){
+  for(let i=0;i<5;i++){
+    createRocket();
+  }
+}
+
+function createRocket(){
+  let x = Math.random() * window.innerWidth;
+  let y = window.innerHeight;
+  let vy = -Math.random() * 8 - 5;
+
+  let rocket = document.createElement("div");
+  rocket.className = "fire";
+  rocket.style.background = "white";
+  rocket.style.left = x + "px";
+  rocket.style.top = y + "px";
+  rocket.style.width = "0.8vw";
+  rocket.style.height = "0.8vw";
+  document.body.appendChild(rocket);
+
+  let explodeHeight = window.innerHeight * 0.25;
+
+  let interval = setInterval(()=>{
+    y += vy;
+    vy += 0.2;
+    rocket.style.top = y + "px";
+
+    if(y <= explodeHeight || vy >= 0){
+      clearInterval(interval);
+      rocket.remove();
+      explode(x,y);
+    }
+  },16);
+}
+
+/* kalp şeklinde patlama */
+function explode(x0, y0){
+  const colors = ["#ff4d6d","#ff69b4","#ff1493","#ffbe0b"];
+  const points = 30;
+  for(let i=0;i<points;i++){
+    let p = document.createElement("div");
+    p.className = "fire";
+    p.style.width = "0.7vw";
+    p.style.height = "0.7vw";
+    p.style.background = colors[Math.floor(Math.random()*colors.length)];
+    document.body.appendChild(p);
+
+    let t = (i/points) * Math.PI*2;
+    let scale = 15;
+    let dx = scale * 16 * Math.pow(Math.sin(t),3);
+    let dy = -scale * (13*Math.cos(t) - 5*Math.cos(2*t) - 2*Math.cos(3*t) - Math.cos(4*t));
+
+    let px = x0;
+    let py = y0;
+    let life = 0;
+
+    let move = setInterval(()=>{
+      life++;
+      p.style.left = px + dx*(life/60) + "px";
+      p.style.top = py + dy*(life/60) + "px";
+      if(life>60){
+        clearInterval(move);
+        p.remove();
+      }
+    },16);
+  }
+}
+</script>
+
+</body>
+</html>
